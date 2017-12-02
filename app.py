@@ -24,7 +24,7 @@ def submit():
 
 	if data == 'bin':
 
-		image = request.form['src']
+		image = appclar.inputs.create_image_from_base64(request.form['src'])
 
 		elements = model.predict([image])['outputs'][0]['data']['concepts']
 
