@@ -6,8 +6,8 @@ from clarifai.rest import Image as ClImage
 
 app = Flask(__name__)
 
-app = ClarifaiApp(api_key='f53aa080f78d418fb75051b03f80d3c4')
-model = app.models.get('food-items-v1.0')
+appclar = ClarifaiApp(api_key='f53aa080f78d418fb75051b03f80d3c4')
+model = appclar.models.get('food-items-v1.0')
 
 
 @app.route('/')
