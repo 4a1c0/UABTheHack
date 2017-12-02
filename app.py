@@ -10,8 +10,8 @@ app = Flask(__name__)
 appclar = ClarifaiApp(api_key='f53aa080f78d418fb75051b03f80d3c4')
 model = appclar.models.get('food-items-v1.0')
 
-def IsPizza(url):
 
+def IsPizza(url):
     image = ClImage(url)
     response = model.predict([image])
     elements = response['outputs'][0]['data']['concepts']
@@ -28,13 +28,12 @@ def IsPizza(url):
             isPineapple = True
 
     if isPineapple and isPizza:
-        response = 'Get the hell out of here.'
+        response = 'FATAL ERROR! pineapple detected.'
     elif isPizza:
         response = 'Your pizza passes the standards of the anti pineapple pizza community.'
     else:
         response = 'That is no pizza man.'
     return response
-
 
 
 @app.route('/')
@@ -75,7 +74,7 @@ def submit():
                 isPineapple = True
 
         if isPineapple and isPizza:
-            response = 'Get the hell out of here.'
+            response = 'FATAL ERROR! pineapple detected.'
         elif isPizza:
             response = 'Your pizza passes the standards of the anti pineapple pizza community.'
         else:
