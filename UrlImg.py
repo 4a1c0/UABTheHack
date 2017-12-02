@@ -14,7 +14,7 @@ def IsPizza(image1):
 	if validators.url(image1): 
 		image = ClImage(image1)
 	else:
-		image = ClImage(open(image1))
+		image = ClImage(open(image1,'rb'))
 
 
 	response = model.predict([image])
