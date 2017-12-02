@@ -26,6 +26,8 @@ def submit():
 
 		image = appclar.inputs.create_image_from_base64(request.form['src'])
 
+		print image
+
 		elements = model.predict([image])['outputs'][0]['data']['concepts']
 
 		isPizzaThreshold = 0.85
