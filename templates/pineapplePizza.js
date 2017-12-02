@@ -43,7 +43,8 @@ function initialize_image_upload(){
     // div.style.height = window.innerHeight/2+'px';
     div.style.height = '50%';
     div.onclick = "$('#filePhoto').click()";
-    div.style.backgroundSize = 'cover';
+    div.style.backgroundRepeat = "no-repeat";
+    div.style.backgroundSize = 'contain';
     div.addEventListener('change', handleImage, false);
 
     var imgLoader = document.createElement('INPUT');
