@@ -64,9 +64,10 @@ function initialize_url_upload(){
     btn.style.top = '80%';
     text.style.top = '80%';
     text.type = 'text';
+    btn.type = 'btn';
     text.placeholder = 'pizza url';
     text.id = 'Url';
-    btn.value = 'run';
+    btn.innerHTML = 'run';
     btn.addEventListener('click', handleUrl, false);
 
     text.style.left = '40%';
@@ -90,8 +91,9 @@ function handleImage(e) {
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = function(){
-        var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
-        $.post("/submit", {data: 'bin', src: base64}, function(result){
+        // var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
+        var bin = get_binary(reader.result);
+        $.post("/submit", {data: 'bin', src: bin}, function(result){
             console.log(result)
         });
         document.getElementById("ingredientDetector").style.backgroundImage = "url(" + reader.result + ")";
