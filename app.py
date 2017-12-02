@@ -1,12 +1,61 @@
 import os
+
 from flask import Flask, render_template
+from clarifai.rest import ClarifaiApp
+from clarifai.rest import Image as ClImage
 
 app = Flask(__name__)
+
+app = ClarifaiApp(api_key='f53aa080f78d418fb75051b03f80d3c4')
+model = app.models.get('food-items-v1.0')
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/submit', methods = ['POST'])
+def sumbmit():
+
+	response = ""
+
+	data = request.form['data']
+
+	if data == 'bin':
+
+		image = request.form['src']
+
+		elements = model.predict([image])['outputs'][0]['data']['concepts']
+
+		isPizzaThreshold = 0.85
+		isPineappleThreshold = 0.3
+		isPizza = False
+		isPineapple = False
+
+		for element in elements:
+		    if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
+		        isPizza = True
+		    if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
+		        isPineapple = True
+
+		if isPineapple and isPizza:
+		    response  = 'Get the hell out of here'
+		elif isPizza:
+		    response = 'Your pizza passes the standards of the anti pineapple pizza community.'
+
+
+	else if data == 'url':
+		pass
+
+	else:
+		response = 'No recognized data type'
+
+
+	
+
+
+	return response
 
 
 if __name__ == '__main__':
