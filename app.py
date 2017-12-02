@@ -74,7 +74,7 @@ def submit():
                 isPineapple = True
 
         if isPineapple and isPizza:
-            response = 'FATAL ERROR! pineapple detected.'
+            response = 'Get the hell out of here.'
         elif isPizza:
             response = 'Your pizza passes the standards of the anti pineapple pizza community.'
         else:
