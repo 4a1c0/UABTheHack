@@ -69,7 +69,7 @@ function initialize_url_upload(){
     welcome_message.style.top = '70%';
 
     welcome_message.innerHTML = '<center>' +
-        'You can also insert here the url of an image suspect of showing a pineapple pie' +
+        'You can also insert here the url of an image suspect of showing a pineapple pizza' +
         '</center>';
 
 

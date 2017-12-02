@@ -33,7 +33,7 @@ def IsPizza(url):
     elif isPizza:
         response = 'Your pizza passes the standards of the anti pineapple pizza community.'
     else:
-        response = 'That is no pizza man.'
+        response = 'That is no pizza, man.'
 
     return response
 
@@ -80,7 +80,7 @@ def submit():
         elif isPizza:
             response = 'Your pizza passes the standards of the anti pineapple pizza community.'
         else:
-            response = 'That is no pizza man.'
+            response = 'That is no pizza, man.'
 
     elif data == 'url':
         response = IsPizza(request.form['src'])
