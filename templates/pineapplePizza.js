@@ -79,9 +79,8 @@ function initialize_url_upload(){
 function handleUrl() {
     var text = document.getElementById('Url');
     text = text.value;
-    console.log(text);
     $.post("/submit", {data: 'url', src: text}, function(result){
-        console.log(result)
+        alert(result)
     });
     document.getElementById("ingredientDetector").style.backgroundImage = "url(" + text + ")";
 }
@@ -94,7 +93,7 @@ function handleImage(e) {
         // var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
         var bin = get_binary(reader.result);
         $.post("/submit", {data: 'bin', src: bin}, function(result){
-            console.log(result)
+            alert(result)
         });
         document.getElementById("ingredientDetector").style.backgroundImage = "url(" + reader.result + ")";
     };
@@ -103,7 +102,6 @@ function handleImage(e) {
 function get_binary(base64_url) {
     var base64 = base64_url.replace(/^data:image\/(png|jpg);base64,/, "");
     var binary_img = bin_encode(base64);
-
 
     return bin_encode(binary_img);
 }
