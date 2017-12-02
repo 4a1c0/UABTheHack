@@ -38,7 +38,7 @@ def submit():
         elements = model.predict_by_bytes(raw_bytes=ba)['outputs'][0]['data']['concepts']
 
         isPizzaThreshold = 0.85
-        isPineappleThreshold = 0.3
+        isPineappleThreshold = 0.01
         isPizza = False
         isPineapple = False
 
