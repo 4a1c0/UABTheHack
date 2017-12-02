@@ -27,33 +27,33 @@ def pineapple_pizza_css():
 
 @app.route('/submit', methods=['POST'])
 def submit():
+
+    response = ""
     data = request.form['data']
 
+
     if data == 'bin':
-        try:
-            image = ClImage(file_obj=request.form['src'])
-            elements = model.predict([image])['outputs'][0]['data']['concepts']
+        image = request.files['src']  
+        #image = request.files['src']
+        elements = model.predict_by_bytes(raw_bytes=image.stream.read())['outputs'][0]['data']['concepts']
 
-            isPizzaThreshold = 0.85
-            isPineappleThreshold = 0.3
-            isPizza = False
-            isPineapple = False
+        isPizzaThreshold = 0.85
+        isPineappleThreshold = 0.3
+        isPizza = False
+        isPineapple = False
 
-            for element in elements:
-                if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
-                    isPizza = True
-                if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
-                    isPineapple = True
+        for element in elements:
+            if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
+                isPizza = True
+            if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
+                isPineapple = True
 
-            if isPineapple and isPizza:
-                response = 'Get the hell out of here.'
-            elif isPizza:
-                response = 'Your pizza passes the standards of the anti pineapple pizza community.'
-            else:
-                response = 'That is no pizza man.'
-
-        except Exception as e:
-            raise e
+        if isPineapple and isPizza:
+            response = 'Get the hell out of here.'
+        elif isPizza:
+            response = 'Your pizza passes the standards of the anti pineapple pizza community.'
+        else:
+            response = 'That is no pizza man.'
 
     elif data == 'url':
         response = 'Test'
@@ -62,7 +62,6 @@ def submit():
     else:
         response = 'No recognized data type'
 
-    print(response)
     return response
 
 
