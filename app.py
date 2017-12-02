@@ -12,7 +12,7 @@ model = appclar.models.get('food-items-v1.0')
 
 def IsPizza(url):
 
-    image = ClImage(url)
+    image = ClImage(url=url)
     response = model.predict([image])
     elements = response['outputs'][0]['data']['concepts']
 
