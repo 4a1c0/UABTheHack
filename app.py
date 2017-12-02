@@ -12,7 +12,8 @@ model = appclar.models.get('food-items-v1.0')
 
 
 def IsPizza(url):
-    image = ClImage(url)
+    image = ClImage(url=url)
+
     response = model.predict([image])
     elements = response['outputs'][0]['data']['concepts']
 
@@ -33,6 +34,7 @@ def IsPizza(url):
         response = 'Your pizza passes the standards of the anti pineapple pizza community.'
     else:
         response = 'That is no pizza man.'
+
     return response
 
 
@@ -81,7 +83,7 @@ def submit():
             response = 'That is no pizza man.'
 
     elif data == 'url':
-        response = IsPizza(data)
+        response = IsPizza(request.form['src'])
 
     else:
         response = 'No recognized data type'
