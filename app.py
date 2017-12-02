@@ -10,6 +10,32 @@ app = Flask(__name__)
 appclar = ClarifaiApp(api_key='f53aa080f78d418fb75051b03f80d3c4')
 model = appclar.models.get('food-items-v1.0')
 
+def IsPizza(url):
+
+    image = ClImage(url)
+    response = model.predict([image])
+    elements = response['outputs'][0]['data']['concepts']
+
+    isPizzaThreshold = 0.85
+    isPineappleThreshold = 0.3
+    isPizza = False
+    isPineapple = False
+
+    for element in elements:
+        if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
+            isPizza = True
+        if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
+            isPineapple = True
+
+    if isPineapple and isPizza:
+        response = 'Get the hell out of here.'
+    elif isPizza:
+        response = 'Your pizza passes the standards of the anti pineapple pizza community.'
+    else:
+        response = 'That is no pizza man.'
+    return response
+
+
 
 @app.route('/')
 def index():
@@ -56,8 +82,7 @@ def submit():
             response = 'That is no pizza man.'
 
     elif data == 'url':
-        response = 'Test'
-        pass
+        response = IsPizza(data)
 
     else:
         response = 'No recognized data type'
