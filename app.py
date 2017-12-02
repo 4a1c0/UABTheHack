@@ -18,33 +18,33 @@ def index():
 @app.route('/submit', methods = ['POST'])
 def submit():
 
-	response = ""
+	response = "Test"
 
 	data = request.form['data']
 
 	if data == 'bin':
+		try:
+			image = ClImage(file_obj=request.form['scr'])
+			elements = model.predict([image])['outputs'][0]['data']['concepts']
 
-		image = appclar.inputs.create_image_from_base64(request.form['src'])
+			isPizzaThreshold = 0.85
+			isPineappleThreshold = 0.3
+			isPizza = False
+			isPineapple = False
 
-		print image
+			for element in elements:
+			    if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
+			        isPizza = True
+			    if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
+			        isPineapple = True
 
-		elements = model.predict([image])['outputs'][0]['data']['concepts']
+			if isPineapple and isPizza:
+			    response  = 'Get the hell out of here'
+			elif isPizza:
+			    response = 'Your pizza passes the standards of the anti pineapple pizza community.'
 
-		isPizzaThreshold = 0.85
-		isPineappleThreshold = 0.3
-		isPizza = False
-		isPineapple = False
-
-		for element in elements:
-		    if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
-		        isPizza = True
-		    if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
-		        isPineapple = True
-
-		if isPineapple and isPizza:
-		    response  = 'Get the hell out of here'
-		elif isPizza:
-		    response = 'Your pizza passes the standards of the anti pineapple pizza community.'
+		except Exception as e:
+			raise e
 
 
 	elif data == 'url':
