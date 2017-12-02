@@ -45,7 +45,7 @@ def submit():
 		    response = 'Your pizza passes the standards of the anti pineapple pizza community.'
 
 
-	else if data == 'url':
+	elif data == 'url':
 		pass
 
 	else:
