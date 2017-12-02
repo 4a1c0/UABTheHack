@@ -27,14 +27,14 @@ def pineapple_pizza_css():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-
     response = ""
     data = request.form['data']
 
-
     if data == 'bin':
-        image = request.files['src']  
-        #image = request.files['src']
+        print(request.form)
+        image = request.file['src']
+        print(image)
+        # image = request.files['src']
         elements = model.predict_by_bytes(raw_bytes=image.stream.read())['outputs'][0]['data']['concepts']
 
         isPizzaThreshold = 0.85

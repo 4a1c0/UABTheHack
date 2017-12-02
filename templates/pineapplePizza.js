@@ -90,9 +90,9 @@ function handleImage(e) {
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = function(){
-        // var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
-        var bin = get_binary(reader.result);
-        $.post("/submit", {data: 'bin', src: bin}, function(result){
+        var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
+        // var bin = get_binary(reader.result);
+        $.post("/submit", {data: 'bin', src: base64}, function(result){
             alert(result)
         });
         document.getElementById("ingredientDetector").style.backgroundImage = "url(" + reader.result + ")";
