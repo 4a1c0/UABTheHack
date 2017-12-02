@@ -15,44 +15,55 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/submit', methods = ['POST'])
+@app.route('/pineapplePizza.js')
+def pineapple_pizza_js():
+    return render_template('pineapplePizza.js')
+
+
+@app.route('/pineapplePizza.css')
+def pineapple_pizza_css():
+    return render_template('pineapplePizza.css')
+
+
+@app.route('/submit', methods=['POST'])
 def submit():
+    data = request.form['data']
 
-	response = "Test"
+    if data == 'bin':
+        try:
+            image = ClImage(file_obj=request.form['src'])
+            elements = model.predict([image])['outputs'][0]['data']['concepts']
 
-	data = request.form['data']
+            isPizzaThreshold = 0.85
+            isPineappleThreshold = 0.3
+            isPizza = False
+            isPineapple = False
 
-	if data == 'bin':
-		try:
-			image = ClImage(file_obj=request.form['scr'])
-			elements = model.predict([image])['outputs'][0]['data']['concepts']
+            for element in elements:
+                if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
+                    isPizza = True
+                if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
+                    isPineapple = True
 
-			isPizzaThreshold = 0.85
-			isPineappleThreshold = 0.3
-			isPizza = False
-			isPineapple = False
+            if isPineapple and isPizza:
+                response = 'Get the hell out of here.'
+            elif isPizza:
+                response = 'Your pizza passes the standards of the anti pineapple pizza community.'
+            else:
+                response = 'That is no pizza man.'
 
-			for element in elements:
-			    if (element['name'] == 'pizza') and (element['value'] > isPizzaThreshold):
-			        isPizza = True
-			    if (element['name'] == 'pineapple') and (element['value'] > isPineappleThreshold):
-			        isPineapple = True
+        except Exception as e:
+            raise e
 
-			if isPineapple and isPizza:
-			    response  = 'Get the hell out of here'
-			elif isPizza:
-			    response = 'Your pizza passes the standards of the anti pineapple pizza community.'
+    elif data == 'url':
+        response = 'Test'
+        pass
 
-		except Exception as e:
-			raise e
+    else:
+        response = 'No recognized data type'
 
-
-	elif data == 'url':
-		pass
-
-	else:
-		response = 'No recognized data type'
-	return response
+    print(response)
+    return response
 
 
 if __name__ == '__main__':
