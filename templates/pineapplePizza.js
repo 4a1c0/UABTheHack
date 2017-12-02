@@ -71,8 +71,8 @@ function initialize_url_upload(){
     btn.innerHTML = 'run';
     btn.addEventListener('click', handleUrl, false);
 
-    text.style.left = (window.innerWidth/2-text.width)+'px';
-    btn.style.left = (window.innerWidth/2-text.width)'56%';
+    text.style.left = (window.innerWidth/2-250)+'px';
+    btn.style.left = (window.innerWidth/2 + 10) + 'px';
     document.body.appendChild(btn);
     document.body.appendChild(text);
 }
