@@ -82,7 +82,9 @@ def submit():
             response = 'That is no pizza man.'
 
     elif data == 'url':
-        response = IsPizza(data)
+        src=request.form['src']
+        
+        response = IsPizza(src)
 
     else:
         response = 'No recognized data type'
