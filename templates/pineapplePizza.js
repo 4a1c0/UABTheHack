@@ -16,7 +16,7 @@ function initialize_title() {
     welcome_message.style.left = '25%';
     welcome_message.innerHTML = '<center>' +
         'Upload below the image of doubtful content in order to automatically ' +
-        'detect is the unnameable ingredient is present in your pizza without hurting your eyes' +
+        'detect is the unnameable ingredient is present in your pizza' +
         '</center>';
 
 
@@ -58,6 +58,26 @@ function initialize_image_upload(){
 }
 
 function initialize_url_upload(){
+    var welcome_message = document.createElement("FORM");
+    welcome_message.style.position = 'absolute';
+    welcome_message.style.height = 0;
+    welcome_message.align = "center";
+    // welcome_message.style.width = window.innerWidth/2+'px';
+    welcome_message.style.width = '50%';
+    // welcome_message.style.left = window.innerWidth/4+'px';
+    welcome_message.style.left = '25%';
+    welcome_message.style.top = '70%';
+
+    welcome_message.innerHTML = '<center>' +
+        'You can also insert here the url of an image suspect of showing a pineapple pie' +
+        '</center>';
+
+
+    document.body.appendChild(welcome_message);
+
+
+
+
     var btn = document.createElement('BUTTON');
     var text = document.createElement('INPUT');
     btn.style.position = 'absolute';
@@ -71,8 +91,8 @@ function initialize_url_upload(){
     btn.innerHTML = 'run';
     btn.addEventListener('click', handleUrl, false);
 
-    text.style.left = (window.innerWidth/2-250)+'px';
-    btn.style.left = (window.innerWidth/2 + 10) + 'px';
+    text.style.left = (window.innerWidth/2-150)+'px';
+    btn.style.left = (window.innerWidth/2 + 110) + 'px';
     document.body.appendChild(btn);
     document.body.appendChild(text);
 }
