@@ -16,7 +16,7 @@ def index():
 
 
 @app.route('/submit', methods = ['POST'])
-def sumbmit():
+def submit():
 
 	response = ""
 
@@ -50,11 +50,6 @@ def sumbmit():
 
 	else:
 		response = 'No recognized data type'
-
-
-	
-
-
 	return response
 
 
