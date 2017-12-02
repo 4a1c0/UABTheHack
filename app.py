@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request, jsonify
 from clarifai.rest import ClarifaiApp
 from clarifai.rest import Image as ClImage
 
