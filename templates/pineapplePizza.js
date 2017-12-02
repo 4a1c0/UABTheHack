@@ -10,8 +10,10 @@ function initialize_title() {
     welcome_message.style.position = 'absolute';
     welcome_message.style.height = 0;
     welcome_message.align = "center";
-    welcome_message.style.width = window.innerWidth/2+'px';
-    welcome_message.style.left = window.innerWidth/4+'px';
+    // welcome_message.style.width = window.innerWidth/2+'px';
+    welcome_message.style.width = '50%';
+    // welcome_message.style.left = window.innerWidth/4+'px';
+    welcome_message.style.left = '25%';
     welcome_message.innerHTML = '<center>' +
         'Upload below the image of doubtful content in order to automatically ' +
         'detect is the unnameable ingredient is present in your pizza without hurting your eyes' +
@@ -25,16 +27,21 @@ function initialize_image_upload(){
     var div = document.createElement('div');
 
     div.style.position = 'absolute';
-    div.style.top = window.innerHeight/8+'px';
-    div.style.left = window.innerWidth/4+'px';
+    // div.style.top = window.innerHeight/8+'px';
+    div.style.top = '13%';
+    // div.style.left = window.innerWidth/4+'px';
+    div.style.left = '25%';
 
-    div.style.height = window.innerHeight/2+'px';
-    div.style.width = window.innerWidth/2+'px';
+    // div.style.height = window.innerHeight/2+'px';
+    div.style.height = '50%';
+    // div.style.width = window.innerWidth/2+'px';
+    div.style.width = '50%';
 
     div.style.backgroundImage = get_bg();
         div.class = "uploader";
     div.id = "ingredientDetector";
-    div.style.height = window.innerHeight/2+'px';
+    // div.style.height = window.innerHeight/2+'px';
+    div.style.height = '50%';
     div.onclick = "$('#filePhoto').click()";
     div.style.backgroundSize = 'cover';
     div.addEventListener('change', handleImage, false);
@@ -49,13 +56,42 @@ function initialize_image_upload(){
     document.body.appendChild(div);
 }
 
+function initialize_url_upload(){
+    var btn = document.createElement('BUTTON');
+    var text = document.createElement('INPUT');
+    btn.style.position = 'absolute';
+    text.style.position = 'absolute';
+    btn.style.top = '80%';
+    text.style.top = '80%';
+    text.type = 'text';
+    text.placeholder = 'pizza url';
+    text.id = 'Url';
+    btn.value = 'run';
+    btn.addEventListener('click', handleUrl, false);
+
+    text.style.left = '40%';
+    btn.style.left = '56%';
+    document.body.appendChild(btn);
+    document.body.appendChild(text);
+}
+
+function handleUrl() {
+    var text = document.getElementById('Url');
+    text = text.value;
+    console.log(text);
+    $.post("/submit", {data: 'url', src: text}, function(result){
+        console.log(result)
+    });
+    document.getElementById("ingredientDetector").style.backgroundImage = "url(" + text + ")";
+}
+
 
 function handleImage(e) {
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = function(){
-        var bin = get_binary(reader.result);
-        $.post("/submit", {data: 'bin', src: bin}, function(result){
+        var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
+        $.post("/submit", {data: 'bin', src: base64}, function(result){
             console.log(result)
         });
         document.getElementById("ingredientDetector").style.backgroundImage = "url(" + reader.result + ")";
