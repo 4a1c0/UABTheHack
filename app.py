@@ -1,4 +1,5 @@
 import os
+import binascii
 
 from flask import Flask, render_template, request, jsonify
 from clarifai.rest import ClarifaiApp
@@ -31,11 +32,10 @@ def submit():
     data = request.form['data']
 
     if data == 'bin':
-        print(request.form)
-        image = request.file['src']
-        print(image)
-        # image = request.files['src']
-        elements = model.predict_by_bytes(raw_bytes=image.stream.read())['outputs'][0]['data']['concepts']
+        image = binascii.a2b_base64(format(request.form['src']))
+        ba = bytearray(image)
+        # elements = model.predict_by_base64(base64_bytes=image)['outputs'][0]['data']['concepts']
+        elements = model.predict_by_bytes(raw_bytes=ba)['outputs'][0]['data']['concepts']
 
         isPizzaThreshold = 0.85
         isPineappleThreshold = 0.3
@@ -63,6 +63,30 @@ def submit():
         response = 'No recognized data type'
 
     return response
+
+
+def padding_left(s, c, n):
+    if (not s or not c) or len(s) >= n:
+        return s
+
+    max = (n - s.length) / len(c)
+    for i in range(max):
+        s = c + s
+    return s
+
+
+def bin_encode(data):
+    binArray = []
+    datEncode = ""
+
+    for i in range(len(data)):
+        binArray.append(data[i].charCodeAt(0).toString(2))
+
+    for j in range(len(binArray)):
+        pad = padding_left(binArray[j], '0', 8)
+        datEncode += pad + ' '
+
+    return binArray
 
 
 if __name__ == '__main__':

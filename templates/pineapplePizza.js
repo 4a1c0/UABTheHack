@@ -90,7 +90,8 @@ function handleImage(e) {
     var reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
     reader.onloadend = function(){
-        var base64 = reader.result.replace(/^data:image\/(png|jpg);base64,/, "");
+        var base64 = reader.result.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+        // var base64 = reader.result;
         // var bin = get_binary(reader.result);
         $.post("/submit", {data: 'bin', src: base64}, function(result){
             alert(result)
@@ -100,7 +101,7 @@ function handleImage(e) {
 }
 
 function get_binary(base64_url) {
-    var base64 = base64_url.replace(/^data:image\/(png|jpg);base64,/, "");
+    var base64 = base64_url.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
     var binary_img = bin_encode(base64);
 
     return bin_encode(binary_img);
