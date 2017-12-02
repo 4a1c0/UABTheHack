@@ -16,7 +16,7 @@ function initialize_title() {
     welcome_message.style.left = '25%';
     welcome_message.innerHTML = '<center>' +
         'Upload below the image of doubtful content in order to automatically ' +
-        'detect is the unnameable ingredient is present in your pizza' +
+        'detect if the unnameable ingredient is present in your pizza' +
         '</center>';
 
 
